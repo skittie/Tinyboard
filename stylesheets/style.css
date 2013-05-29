@@ -1,7 +1,7 @@
 body {
-	background: #EEF2FF url('img/fade-blue.png') repeat-x 50% 0%;
+	background: #EEFDFF;
 	color: black;
-	font-family: arial, helvetica, sans-serif;
+	font-family: Verdana,Tahoma,sans-serif;
 	font-size: 10pt;
 	margin: 0 8px;
 	padding-left: 5px;
@@ -38,26 +38,30 @@ p.intro label {
 	display: inline;
 }
 h2 {
-	color: #AF0A0F;
+	color: #333300;
 	font-size: 11pt;
 	margin: 0;
 	padding: 0;
 }
 header {
 	margin: 1em 0;
+	text-align:center;
+}
+header img {
+	float:none;
+	display:inline;
 }
 h1 {
-	font-family: tahoma;
-	letter-spacing: -2px;
-	font-size: 20pt;
+	font-size: 23px;
 	margin: 0;
 }
 header div.subtitle, h1 {
-	color: #AF0A0F;
+	color: #333300;
 	text-align: center;
 }
 header div.subtitle {
-	font-size: 8pt;
+	font-size: 16px;
+	font-style:italic;
 }
 form {
 	margin-bottom: 4em;
@@ -88,7 +92,7 @@ form table tr th {
 	padding: 4px;
 }
 form table tr th {
-	background: #98E;
+	background: #D6F0E4;
 }
 form table tr td div {
 	text-align: center;
@@ -242,8 +246,6 @@ div#wrap {
 	margin:0 auto;
 }
 div.ban {
-	background: white;
-	border: 1px solid #98E;
 	max-width: 700px;
 	margin: 30px auto;
 }
@@ -251,7 +253,7 @@ div.ban p, div.ban h2 {
 	padding: 3px 7px;
 }
 div.ban h2 {
-	background: #98E;
+	background: #D6F0E4;
 	color: black;
 	font-size: 12pt;
 }
@@ -263,7 +265,7 @@ div.ban p.reason {
 	font-weight: bold;
 }
 span.heading {
-	color: #AF0A0F;
+	color: #333300;
 	font-size: 11pt;
 	font-weight: bold;
 }
@@ -296,7 +298,7 @@ table.test td, table.test th {
 	padding: 5px;
 }
 table.test tr.h th {
-	background: #98E;
+	background: #D6F0E4;
 }
 table.test td img {
 	margin: 0;
@@ -363,7 +365,7 @@ table.modlog tr th {
 	white-space: nowrap;
 }
 table.modlog tr th {
-	background: #98E;
+	background: #D6F0E4;
 }
 td.minimal, th.minimal {
 	width: 1%;
