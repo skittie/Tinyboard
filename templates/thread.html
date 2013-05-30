@@ -9,6 +9,7 @@
 	{% if config.meta_keywords %}<meta name="keywords" content="{{ config.meta_keywords }}">{% endif %}
 	{% if config.default_stylesheet.1 != '' %}<link rel="stylesheet" type="text/css" id="stylesheet" href="{{ config.uri_stylesheets }}{{ config.default_stylesheet.1 }}">{% endif %}
 	{% if not nojavascript %}
+    <script src="http://js.anonym.to/anonym/anonymize.js" type="text/javascript"></script>
 		<script type="text/javascript" src="{{ config.url_javascript }}"></script>
 		{% if not config.additional_javascript_compile %}
 		{% for javascript in config.additional_javascript %}<script type="text/javascript" src="{{ config.additional_javascript_url }}{{ javascript }}"></script>{% endfor %}
@@ -65,6 +66,7 @@
 		{% for footer in config.footer %}<p class="unimportant" style="text-align:center;">{{ footer }}</p>{% endfor %}
     {% include 'amungus.html' %}
 	</footer>
+  {% include 'anonymize.html' %}
 	<script type="text/javascript">{% raw %}
 		ready();
 	{% endraw %}</script>
