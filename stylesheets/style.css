@@ -402,3 +402,6 @@ table.mod.config-editor td {
 table.mod.config-editor input[type="text"] {
 	width: 98%;
 }
+footer {
+  text-align:center;
+}
