@@ -206,12 +206,12 @@ div.post div.body {
 	white-space: pre-wrap;
 }
 div.post.reply {
-	background: #D6DAF0;
+  background: #D6F0E4;
 	margin: 0.2em 16px;
 	padding: 0.2em 0.3em 0.5em 0.6em;
 	border-width: 1px;
 	border-style: none solid solid none;
-	border-color: #B7C5D9;
+  border-color: #D6F0E4;
 	display: inline-block;
 }
 span.trip {
@@ -405,6 +405,9 @@ table.mod.config-editor input[type="text"] {
 }
 footer {
   text-align:center;
+}
+select.styles {
+  float:right;
 }
 .desktop-style div.boardlist:nth-child(1) {
   position: fixed;
