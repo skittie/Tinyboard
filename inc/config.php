@@ -233,6 +233,8 @@
 		'embed',
 		'recaptcha_challenge_field',
 		'recaptcha_response_field',
+		'imgcaptcha_hash',
+		'imgcaptcha_verify',
 		'spoiler',
 		'quick-reply'
 	);
@@ -268,6 +270,19 @@
 	$config['recaptcha_public'] = '6LcXTcUSAAAAAKBxyFWIt2SO8jwx4W7wcSMRoN3f';
 	$config['recaptcha_private'] = '6LcXTcUSAAAAAOGVbVdhmEM1_SyRF4xTKe8jbzf_';
 	
+	$config['imgcaptcha'] = false;
+	$config['imgcaptcha_key'] = "cos losowego"; // max 32 znaki
+	$config['imgcaptcha_list'] = "/sciezka/do/pliku.txt";
+	$config['imgcaptcha_images'] = "/sciezka/do/obrazkow"; // without a slash at the end
+	$config['imgcaptcha_question'] = "Was ist das?";
+	$config['imgcaptcha_time_limit'] = 90; // Kapcza wazna przez 90 sekund po wejsciu
+	$config['imgcaptcha_filler'] = "/plik/kliknijmie.png";
+	$config['imgcaptcha_width'] = 128;
+	$config['imgcaptcha_height'] = 96;
+
+	// JESLI DODAJESZ IMGKAPCZE, NIE ZAPOMNIJ O TYM
+	// Wymagane tez jQuery - o tam, nizej.
+	//$config['additional_javascript'][] = 'js/imgcaptcha.js';
 /*
  * ====================
  *  Post settings
@@ -328,6 +343,9 @@
 	$config['auto_unicode'] = true;
 	// Whether to turn URLs into functional links
 	$config['markup_urls'] = true;
+	// Prefix those functional links with some other url, for example some service for hiding referers
+	// (eg. 'http://www.nullrefer.com/?', or 'http://anonym.to/?'), a pay-per-view exit page, etc.
+	$config['url_ads'] = '';	
 	
 	// Wordfilters are used to automatically replace certain words/phrases with something else.
 	// For a normal string replacement:
@@ -403,11 +421,16 @@
 	$config['thumb_keep_animation_frames'] = 1;
 	
 	// Thumbnailing method:
-	//	- 'gd'		PHP GD (default). Only handles the most basic image formats (GIF, JPEG, PNG). This is a prerequisite
-	//			for Tinyboard no matter what method you choose.
-	//	- 'imagick'	PHP's ImageMagick bindings. Fast and efficient, supporting many image formats. A  few minor bugs.
-	//			http://pecl.php.net/package/imagick
-	//	- 'convert'	The command line version of ImageMagick (`convert`). Fixes most of the bugs in PHP Imagick.
+	//	- 'gd'			PHP GD (default). Only handles the most basic image formats (GIF, JPEG, PNG).
+	//				This is a prerequisite for Tinyboard no matter what method you choose.
+	//	- 'imagick'		PHP's ImageMagick bindings. Fast and efficient, supporting many image formats. 
+	//				A few minor bugs. http://pecl.php.net/package/imagick
+	//	- 'convert'		The command line version of ImageMagick (`convert`). Fixes most of the bugs in
+	//				PHP Imagick.
+	//	- 'convert+gifsicle'	Same as above, with the exception of using `gifsicle` (command line application)
+	//				instead of `convert` for resizing gifs. It's faster and resulting animated gifs
+	//				have less artifacts than if resized with ImageMagick. 
+                               
 	$config['thumb_method'] = 'gd';
 	
 	// Regular expression to check for IE MIME type detection XSS exploit. To disable, comment the line out
@@ -464,6 +487,9 @@
 	$config['show_ratio'] = false;
 	// Display the file's original filename
 	$config['show_filename']= true;
+
+	// Image identification buttons using regex.info/exif, tineye and google images
+	$config['image_identification'] = false;
 	
 	// Redraw the image using GD functions to strip any excess data (commonly ZIP archives)
 	// WARNING: Currently strips animated GIFs too
@@ -493,7 +519,11 @@
 	
 	// How many reports you can create in the same request.
 	$config['report_limit'] = 3;
-	
+
+	// Attention Whoring Bar
+	// REMEMBER TO CHMOD attentionbar.txt PROPERLY
+	// Oh, and add jQuery in additional_javascript.
+	$config['attention_bar'] = false;
 /*
  * ====================
  *  Display settings
@@ -588,6 +618,9 @@
 	// Some scripts require jQuery. Check the comments in script files to see what's needed.
 	// $config['additional_javascript'][] = 'js/jquery.min.js';
 	// $config['additional_javascript'][] = 'js/auto-reload.js';
+
+	// Enable hiding posts. Remember to put this AFTER jQuery.
+	// $config['additional_javascript'][] = 'js/post-hider.js';
 	 
 	// Where these script files are located on the web (defaults to $config['root']).
 	// $config['additional_javascript_url'] = '/js/';
@@ -633,6 +666,10 @@
 		array(
 			'/^https?:\/\/video\.google\.com\/videoplay\?docid=(\d+)([&#](.+)?)?$/i',
 			'<embed src="http://video.google.com/googleplayer.swf?docid=$1&hl=en&fs=true" style="width:%%tb_width%%px;height:%%tb_height%%px;float:left;margin:10px 20px" allowFullScreen="true" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'
+		),
+		array(
+			'/^https?:\/\/(\w+\.)?vocaroo\.com\/i\/([a-zA-Z0-9]{2,15})$/i',
+			'<object style="float: left;margin: 10px 20px;" width="148" height="44"><param name="movie" value="http://vocaroo.com/player.swf?playMediaID=$2&autoplay=0"></param><param name="wmode" value="transparent"></param><embed src="http://vocaroo.com/player.swf?playMediaID=$2&autoplay=0" width="148" height="44" wmode="transparent" type="application/x-shockwave-flash"></embed></object>'
 		)
 	);
 	
@@ -713,6 +750,11 @@
 		$config['root']	 = (str_replace('\\', '/', dirname($_SERVER['REQUEST_URI'])) == '/' ? '/' : str_replace('\\', '/', dirname($_SERVER['REQUEST_URI'])) . '/');
 	else
 		$config['root'] = '/'; // CLI mode
+
+	// The scheme and domain. This is needed to get absolute URL of some page (for instance image
+	// identification buttons). If you use the CLI tools, it would be wise to override this setting.
+	$config['domain']  = (isset ($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? "https://" : "http://";
+	$config['domain'] .=  isset ($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
 	
 	// If for some reason the folders and static HTML index files aren't in the current working direcotry,
 	// enter the directory path here. Otherwise, keep it false.
