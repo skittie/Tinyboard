@@ -25,7 +25,7 @@ function doBoardListPart($list, $root) {
 	$body = '';
 	foreach ($list as $board) {
 		if (is_array($board))
-			$body .= ' <span class="sub">[' . doBoardListPart($board, $root) . ']</span> ';
+			$body .= ' [' . doBoardListPart($board, $root) . '] ';
 		else {
 			if (($key = array_search($board, $list)) && gettype($key) == 'string') {
 				$body .= ' <a href="' . $board . '">' . $key . '</a> /';

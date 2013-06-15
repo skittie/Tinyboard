@@ -1347,14 +1347,14 @@ function quote($body, $quote=true) {
 }
 
 function markup_url($matches) {
-	global $config, $markup_urls;
+	global $markup_urls;
 	
 	$url = $matches[1];
 	$after = $matches[2];
 	
 	$markup_urls[] = $url;
 	
-	return '<a target="_blank" rel="nofollow" href="'. $config['url_ads'] . $url . '">' . $url . '</a>' . $after;
+	return '<a target="_blank" rel="nofollow" href="' . $url . '">' . $url . '</a>' . $after;
 }
 
 function unicodify($body) {
@@ -1440,7 +1440,7 @@ function markup(&$body, $track_cites = false) {
 	}
 	
 	// Cross-board linking
-	if (preg_match_all('/(^|\s)&gt;&gt;&gt;\/([\w.+]+?)\/(\d+)?([\s,.)?]|$)/m', $body, $cites)) {
+	if (preg_match_all('/(^|\s)&gt;&gt;&gt;\/(\w+?)\/(\d+)?([\s,.)?]|$)/m', $body, $cites)) {
 		if (count($cites[0]) > $config['max_cites']) {
 			error($config['error']['toomanycross']);
 		}

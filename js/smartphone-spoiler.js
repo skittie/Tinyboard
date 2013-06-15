@@ -6,13 +6,12 @@
  * Copyright (c) 2012 Michael Save <savetheinternet@tinyboard.org>
  *
  * Usage:
- *   $config['additional_javascript'][] = 'js/mobile-style.js';
  *   $config['additional_javascript'][] = 'js/smartphone-spoiler.js';
  *
  */
 
 onready(function(){
-	if(device_type == 'mobile') {
+	if(navigator.userAgent.match(/iPhone|iPod|iPad|Android|Opera Mini|Blackberry|PlayBook/i)) {
 		var spoilers = document.getElementsByClassName('spoiler');
 		for(var i = 0; i < spoilers.length; i++) {
 			spoilers[i].onmousedown = function() {
