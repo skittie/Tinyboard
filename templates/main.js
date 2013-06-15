@@ -10,10 +10,7 @@ var styles = {
 	{% endraw %}{% endfor %}{% raw %}
 };
 
-function changeStyle(styleName) {
-  if(styleName == null) {
-    styleName = $('select.styles').val();
-  }
+function changeStyle(styleName, link) {
 	localStorage.stylesheet = styleName;
 	
 	if (!document.getElementById('stylesheet')) {
@@ -35,6 +32,9 @@ function changeStyle(styleName) {
 		}
 	}
 	
+	if (link) {
+		link.className = 'selected';
+	}
 }
 
 if (localStorage.stylesheet) {
@@ -47,22 +47,23 @@ if (localStorage.stylesheet) {
 }
 
 function init_stylechooser() {
-  var select = '<select class="styles">';
-  for (styleName in styles) {
-    select += '<option';
-    if (styleName == selectedstyle) {
-      select += ' selected="selected"';
-    }
-    select += '>' + styleName + '</option>';
-  }
-  select += '</select>';
-
-  $('body').append(select);
-
-  select = $('select.styles');
-  select.change(function() {
-    changeStyle(null);
-  });
+	var newElement = document.createElement('div');
+	newElement.className = 'styles';
+	
+	for (styleName in styles) {
+		var style = document.createElement('a');
+		style.innerHTML = '[' + styleName + ']';
+		style.onclick = function() {
+			changeStyle(this.innerHTML.substring(1, this.innerHTML.length - 1), this);
+		};
+		if (styleName == selectedstyle) {
+			style.className = 'selected';
+		}
+		style.href = 'javascript:void(0);';
+		newElement.appendChild(style);
+	}	
+	
+	document.getElementsByTagName('body')[0].insertBefore(newElement, document.getElementsByTagName('body')[0].lastChild.nextSibling);
 }
 
 function get_cookie(cookie_name) {
