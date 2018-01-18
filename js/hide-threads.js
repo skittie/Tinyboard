@@ -48,8 +48,8 @@ $(document).ready(function(){
 			hidden_data[board] = {}; // id : timestamp
 		}
 	
-		$('<a class="hide-thread-link" style="float:left;margin-right:5px" href="javascript:void(0)">[–]</a><span> </span>')
-			.insertBefore(thread_container.find(':not(h2,h2 *):first'))
+		$('<a class="msgbtn hide-thread-link" href="javascript:void(0)" title="Piilota lanka"><i class="messagebtn fa fa-minus" aria-hidden="true"></i></a>')
+			.appendTo(thread_container.find('.op>.intro>.messageoptions'))
 			.click(function() {
 				hidden_data[board][id] = Math.round(Date.now() / 1000);
 				store_data();
@@ -62,7 +62,7 @@ $(document).ready(function(){
 				hidden_div.html(hidden_div.html().replace(' [] ', ' '));
 				hidden_div.html(hidden_div.html().replace(' [] ', ' '));
 				
-				$('<a class="unhide-thread-link" style="float:left;margin-right:5px;margin-left:0px;" href="javascript:void(0)">[+]</a><span> </span>')
+				$('<a class="unhide-thread-link" href="javascript:void(0)" title="Näytä lanka"><i class="messagebtn fa fa-plus" aria-hidden="true"></i></a><span> </span>')
 					.insertBefore(hidden_div.find(':first'))
 					.click(function() {
 						delete hidden_data[board][id];

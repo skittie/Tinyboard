@@ -483,7 +483,7 @@
 	// Maximum post body length.
 	$config['max_body'] = 1800;
 	// Maximum number of post body lines to show on the index page.
-	$config['body_truncate'] = 15;
+	$config['body_truncate'] = 32;
 	// Maximum number of characters to show on the index page.
 	$config['body_truncate_char'] = 2500;
 
@@ -900,7 +900,7 @@
  */
 
 	// Tinyboard has been translated into a few langauges. See inc/locale for available translations.
-	$config['locale'] = 'en'; // (en, ru_RU.UTF-8, fi_FI.UTF-8, pl_PL.UTF-8)
+	$config['locale'] = 'fi_FI.UTF-8'; // (en, ru_RU.UTF-8, fi_FI.UTF-8, pl_PL.UTF-8)
 
 	// Timezone to use for displaying dates/tiems.
 	$config['timezone'] = 'America/Los_Angeles';

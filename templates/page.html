@@ -6,7 +6,7 @@
 		var active_page = "page";
 	</script>
 	{% include 'header.html' %}
-	<title>{{ title }}</title>
+	<title>{{ title[:16] ~ '...' }}</title>
 </head>
 <body class="8chan vichan {% if mod %}is-moderator{% else %}is-not-moderator{% endif %} active-page" data-stylesheet="{% if config.default_stylesheet.1 != '' %}{{ config.default_stylesheet.1 }}{% else %}default{% endif %}">
         {{ boardlist.top }}

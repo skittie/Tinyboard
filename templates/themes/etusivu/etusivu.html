@@ -1,0 +1,116 @@
+{% filter remove_whitespace %}
+<!doctype html>
+<html>
+<head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>{{ settings.title }}</title>
+	<link rel="stylesheet" media="screen" href="{{ config.url_stylesheet }}"/>
+	<link rel="stylesheet" media="screen" href="{{ config.root }}{{ settings.css }}"/>
+	{% if config.url_favicon %}<link rel="shortcut icon" href="{{ config.url_favicon }}" />{% endif %}
+	{% if config.default_stylesheet.1 != '' %}<link rel="stylesheet" type="text/css" id="stylesheet" href="{{ config.uri_stylesheets }}{{ config.default_stylesheet.1 }}">{% endif %}
+	{% if config.font_awesome %}<link rel="stylesheet" href="{{ config.root }}{{ config.font_awesome_css }}">{% endif %}
+	{% include 'header.html' %}
+</head>
+<body>
+	{{ boardlist.top }}
+	<header>
+		<h1>{{ settings.title }}</h1>
+		<div class="subtitle">{{ settings.subtitle }}</div>
+	</header>
+	
+	<div class="box-wrap">
+		<div class="box top">
+			<h2>{{ settings.title }}</h2>
+			<p>{{ settings.title }} on <a href="#privacy">anonyymi ja yksityisyyttäsi kunnioittava</a> kuvalauta. Viestien lähettäminen on täysin anonyymiä, eikä rekisteröityminen ole mahdollista.</p>
+			<p>Projektin tarkoituksena ei ole olla kilpailija Ylilaudalle, vaan perustaa lautakulttuurin perinteitä kunnioittava kuvalauta Ylilaudan tasoon kyllästyneille käyttäjille.</p>
+			<p><a class="infolink" href="#info">Säännöt / UKK</a></p>
+		</div>
+		<div class="box top">
+			<h2>Keskustelualueet</h2>
+			<nav class="boards">
+				<a href="/a/">
+					<span class="boardname">/a/ - Japanijutut</span>
+				</a>
+				<a href="/b/">
+					<span class="boardname">/b/ - Satunnainen</span>
+				</a>
+				<a href="/meta/">
+					<span class="boardname">/meta/ - Tasovalitus</span>
+				</a>
+				<a href="/z/">
+					<span class="boardname">/z/ - Hiekkalaatikko</span>
+				</a>
+			</nav>
+		</div>
+		<div class="box left">
+			<h2>Viimeisimmät kuvat</h2>
+			<ul>
+				{% for post in recent_images %}
+					<li>
+						<a href="{{ post.link }}">
+							<img src="{{ post.src }}" style="width:{{ post.thumbwidth }}px;height:{{ post.thumbheight }}px" alt="">
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="box right">
+			<h2>Viimeisimmät viestit</h2>
+			<ul>
+				{% for post in recent_posts %}
+					<li>
+						<strong>{{ post.board_name }}</strong>: 
+						<a href="{{ post.link }}">
+							{{ post.snippet }}
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="box right">
+			<h2>Tilastot</h2>
+			<ul>
+				<li>Viestejä yhteensä: {{ stats.total_posts }}</li>
+				<li>Uniikkeja postaajia: {{ stats.unique_posters }}</li>
+				<li>Aktiivista sisältöä: {{ stats.active_content|filesize }}</li>
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<div class="box left rules" id="info">
+			<h2>Säännöt</h2>
+			<p>Sivusto on tarkoitettu ainoastaan täysi-ikäisille ja avaamalla minkä tahansa keskustelualueen vakuutat olevasi vähintään 18-vuotias. </p>
+			<p>Käyttäjä on itse vastuussa jakamastaan sisällöstä.</p>
+			<ul>
+				<li><strong>Säännöt</strong></li>
+				<li>Lainvastaisen materiaalin jakaminen on kielletty.</li>
+			</ul>
+			
+			<p>Moderaattoreilla on oikeus poistaa selvästi alaikäisten henkilöiden kirjoittamat viestit sekä soveltaa omaa bannipolitiikkaansa tiettyyn pisteeseen asti.</p>
+		</div>
+		<div class="box right">
+			<h2>UKK</h2>
+			<ul>
+				<li><strong>Kuinka voin ottaa yhteyttä ylläpitoon?</strong></li>
+				<li>Suurin osa ylläpidosta löytyy kanavalta #ylis.fi @ quakenet</li>
+			</ul>
+			<ul>
+				<li><strong>Pääsenkö modeksi?</strong></li>
+				<li>Luultavasti et, mutta jos haluat olla mukana "sisäpiirissä", voit liittyä irc-kanavalle.</li>
+			</ul>
+		</div>
+		<div class="box right" id="privacy">
+			<h2>Foliohatuille</h2>
+			<p>todo</p>
+		</div>
+	</div>
+	
+	<hr/>
+	<footer>
+		<p class="unimportant" style="margin-top:20px;text-align:center;">- Tinyboard + 
+			<a href="https://engine.vichan.net/">vichan</a> {{ config.version }} -
+		<br>Tinyboard Copyright &copy; 2010-2014 Tinyboard Development Group    
+		<br><a href="https://engine.vichan.net/">vichan</a> Copyright &copy; 2012-2016 vichan-devel</p>
+	</footer>
+</body>
+</html>
+{% endfilter %}

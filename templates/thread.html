@@ -21,7 +21,7 @@
 	{% if thread.files.0.thumb %}<meta property="og:image" content="{{ config.domain }}/{{ board.uri }}/{{ config.dir.thumb }}{{ thread.files.0.thumb }}" />{% endif %}
 	<meta property="og:description" content="{{ thread.body_nomarkup|e }}" />
 
-	<title>{{ board.url }} - {{ meta_subject }}</title>
+	<title>{{ board.url }} - {{ meta_subject[:32] ~ '...' }}</title>
 </head>
 <body class="8chan vichan {% if mod %}is-moderator{% else %}is-not-moderator{% endif %} active-thread" data-stylesheet="{% if config.default_stylesheet.1 != '' %}{{ config.default_stylesheet.1 }}{% else %}default{% endif %}">
 	{{ boardlist.top }}
@@ -51,7 +51,7 @@
 	{% include 'post_form.html' %}
 
 	{% if config.global_message %}<hr /><div class="blotter">{{ config.global_message }}</div>{% endif %}
-	<hr />
+{% include 'pages.html' %}
 	<form name="postcontrols" action="{{ config.post_url }}" method="post">
 		<input type="hidden" name="board" value="{{ board.uri }}" />
 		{% if mod %}<input type="hidden" name="mod" value="1" />{% endif %}
@@ -75,6 +75,7 @@
 		</div>
 		
 		<div class="clearfix"></div>
+{% include 'pages.html' %}
 	</form>
 	
 	<a name="bottom"></a>

@@ -149,9 +149,9 @@ $(document).ready(function(){
 	}
 
 	//Append the watchlist toggle button.
-	$('.boardlist').append('<span>[ <a class="watchlist-toggle" href="#">'+_('watchlist')+'</a> ]</span>');
+	$('.boardlist').append('<span>[ <a class="watchlist-toggle" href="#" "Seuratut langat"><i class="fa fa-eye" aria-hidden="true"></i></a> ]</span>');
     	//Append a watch thread button after every OP post number.
-    	$('.op>.intro>.post_no:odd').after('<a class="watchThread" href="#">['+_('Watch Thread')+']</a>');
+    	$('.op>.intro>.messageoptions').append('<a class="msgbtn watchThread" href="#" title="Seuraa lankaa"><i class="messagebtn fa fa-eye" aria-hidden="true"></i></a>');
 
 	//Draw the watchlist, hidden.
 	watchlist.render();

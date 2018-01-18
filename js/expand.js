@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 	var do_expand = function() {
 		$(this)
-			.html($(this).text().replace(_("Click reply to view."), '<a href="javascript:void(0)">'+_("Click to expand")+'</a>.'))
+			.html($(this).text().replace(_("Click reply to view."), '<a class="msgbtn messageicon" href="javascript:void(0)"><i class="fa fa-plus" aria-hidden="true"></i> Laajenna</a>'))
 			.find('a').click(window.expand_fun = function() {
 				var thread = $(this).parents('[id^="thread_"]');
 				var id = thread.attr('id').replace(/^thread_/, '');
@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 						thread.find("span.omitted").css('display', 'none');
 
-						$('<span class="omitted hide-expanded"><a href="javascript:void(0)">' + _('Hide expanded replies') + '</a>.</span>')
+						$('<span class="omitted hide-expanded"><a href="javascript:void(0)" class="messageicon msgbtn"><i class="fa fa-minus" aria-hidden="true"></i> Piilota</a></span>')
 							.insertAfter(thread.find('.op div.body, .op span.omitted').last())
 							.click(function() {
 								thread.find('.expanded').remove();

@@ -1,0 +1,35 @@
+	<div class="navbar">
+		<p class="navtext">
+		<a href="/">{{ config.sitename }}</a> » <a href="/{{ board.uri }}/">{{ board.title }}</a>{% if meta_subject %} » <a href="/{{ board.uri }}/{{ thread.id }}.html">{{ meta_subject[:64] ~ '...' }}</a> {% endif %}
+		</p>
+		{% if config.board_search %}
+			<div class="search" >
+			<!-- Start Search Form -->
+				<form style="display:inline" action="/search.php" class="searchbox">
+					<input type="text" name="search" class="searchbox-input" placeholder="Haku alueelta {{ board.title }}" onkeyup="buttonUp();" >
+					<input type="hidden" name="board" value="{{ board.uri }}">
+					<!-- input type="submit" class="searchbox-submit" value="Search">
+					<span class="fa fa-search searchbox-icon" aria-hidden="true"></span -->
+				</form>
+			<!-- End Search Form -->
+			</div>
+		{% endif %}
+<div class="nav_container">
+	<nav class="pages">
+		<span class="pages">
+		{{ btn.prev }} 
+		{% for page in pages %}
+			{% if page.selected %}<span class="selected">{{ page.num }}</span>{% endif %}
+			{% if not page.selected %}<a href="{{ page.link }}">{{ page.num }}</a>{% if loop.last %} {% endif %}{% endif %}
+		{% endfor %} 
+		{{ btn.next }}
+		</span>
+		{% if config.catalog_link %}
+			<span class="display-styles">
+			 <a href="{{ config.root }}{{ board.dir }}{{ config.catalog_link }}"><i class="fa fa-th" aria-hidden="true"></i></a>
+			</span>
+		{% endif %}
+	</nav>
+</div>
+
+    </div>
